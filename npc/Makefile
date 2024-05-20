@@ -4,8 +4,8 @@ all:
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by your self."
-	verilator --cc npc.v -Wno-fatal --exe sim_main.cpp && \
-    cd obj_dir && make -f Vnpc.mk && \
-    ./Vnpc
+	verilator --cc --exe --build -j 0 -Wall sim_main.cpp our.v --trace && \
+    cd obj_dir && \
+    ./Vour
 
 include ../Makefile
