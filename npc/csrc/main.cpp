@@ -6,7 +6,7 @@
 #include "verilated.h"
 #include <Vtop.h>
 #include "verilated_vcd_c.h"
-#include <nvboard.h>
+
 
 void nvboard_bind_all_pins(TOP_NAME* top);
 
