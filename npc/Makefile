@@ -5,9 +5,7 @@ all:
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by your self.r"
-
-	include /home/holy/ysyx-workbench/nvboard/scripts/nvboard.mk
-
+	include ../nvboard/scripts/nvboard.mk
 	verilator -Wall --trace -cc ./vsrc/top.v --exe ./csrc/main.cpp
 	make -C obj_dir -f Vtop.mk Vtop ./nvboard.a -lsDL2 -lsDL2_image
 
