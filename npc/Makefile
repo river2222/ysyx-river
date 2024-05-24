@@ -6,7 +6,7 @@ all:
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by your self.r"
-	verilator -Wall --trace -cc ./vsrc/top.v --exe ./csrc/main.cpp
+	verilator -Wall --trace -cc -I/home/holy/ysyx-workbench/nvboard/include ./vsrc/top.v --exe ./csrc/main.cpp
 	make -C obj_dir -f Vtop.mk Vtop ./nvboard.a -lsDL2 -lsDL2_image
 
 include ../Makefile
