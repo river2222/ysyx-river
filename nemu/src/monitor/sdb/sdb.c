@@ -49,6 +49,7 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+	nemu_state.state = NEMU_QUIT;
   return -1;
 }
 
@@ -100,9 +101,11 @@ void sdb_mainloop() {
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
-  }
 
-  for (char *str; (str = rl_gets()) != NULL; ) {
+	}
+
+
+	for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
@@ -111,9 +114,11 @@ void sdb_mainloop() {
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
-     */
+
+*/
     char *args = cmd + strlen(cmd) + 1;
-    if (args >= str_end) {
+
+		if (args >= str_end) {
       args = NULL;
     }
 
@@ -127,8 +132,10 @@ void sdb_mainloop() {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
         if (cmd_table[i].handler(args) < 0) { return; }
         break;
-      }
-    }
+
+			}
+
+		}
 
     if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
   }
