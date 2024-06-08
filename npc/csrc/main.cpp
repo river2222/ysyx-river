@@ -6,10 +6,13 @@
 #include "verilated.h"
 #include <Vtop.h>
 #include "verilated_vcd_c.h"
-#include "/home/holy/ysyx-workbench/nvboard/include/nvboard.h"
+#include <nvboard.h>
 
 
 void nvboard_bind_all_pins(TOP_NAME* top);
+void nvboard_init();
+void nvboard_update(); 
+void nvboard_quit();
 
 int main(int argc, char** argv) {
     TOP_NAME dut; 

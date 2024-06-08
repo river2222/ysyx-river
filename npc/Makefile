@@ -1,12 +1,10 @@
-include ../nvboard/scripts/nvboard.mk
-SRC_DIR = /home/holy/ysyx-workbench/nvboard/example/build/auto_bind.cpp
+include /home/holy/ysyx-workbench/nvboard/scripts/nvboard.mk
+
 all:
 	@echo "Write this Makefile by your self."
 
 sim:
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "Write this Makefile by your self.r"
-	verilator -Wall --trace -cc -I/home/holy/ysyx-workbench/nvboard/include ./vsrc/top.v --exe ./csrc/main.cpp
-	make -C obj_dir -f Vtop.mk Vtop ./nvboard.a -lsDL2 -lsDL2_image
-
-include ../Makefile
+	$(call git_commit, "sim RTL")
+	@echo "Write this Makefile by your self."
+	verilator -Wall --trace -cc -I/home/holy/ysyx-workbench/nvboard/usr/include ./vsrc/top.v --exe ./csrc/main.cpp
+	make -C obj_dir -f Vtop.mk Vtop ./nvboard.a -lSDL2 -lSDL2_image
