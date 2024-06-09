@@ -37,7 +37,8 @@ static char* rl_gets() {
 
   if (line_read && *line_read) {
     add_history(line_read);
-  }
+
+	}
 
   return line_read;
 }
@@ -54,6 +55,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
+static int cmd_si(char *args);
 
 static struct {
   const char *name;
@@ -65,7 +67,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+	{ "si", "Single step", cmd_si },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -75,13 +77,17 @@ static int cmd_help(char *args) {
   char *arg = strtok(NULL, " ");
   int i;
 
-  if (arg == NULL) {
+
+	if (arg == NULL) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
       printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
-    }
-  }
-  else {
+
+		}
+
+	}
+
+	else {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
         printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
@@ -92,6 +98,18 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
+
+static int cmd_si(char *args) {
+	if (args==NULL)	cpu_exec(1);
+	else{
+		int n=0;
+		sscanf(args,"%d",&n);
+		cpu_exec(n);
+	}
+	return 0;
+}	
+
+
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
