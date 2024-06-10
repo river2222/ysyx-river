@@ -31,11 +31,13 @@ static char* rl_gets() {
   if (line_read) {
     free(line_read);
     line_read = NULL;
-  }
+
+	}
 
   line_read = readline("(nemu) ");
 
-  if (line_read && *line_read) {
+
+	if (line_read && *line_read) {
     add_history(line_read);
 
 	}
@@ -56,6 +58,7 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 static int cmd_si(char *args);
+static int cmd_info(char *args);
 
 static struct {
   const char *name;
@@ -68,6 +71,7 @@ static struct {
 
   /* TODO: Add more commands */
 	{ "si", "Single step", cmd_si },
+	{ "info", "Print registers", cmd_info },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -109,7 +113,11 @@ static int cmd_si(char *args) {
 	return 0;
 }	
 
-
+static int cmd_info(char *args) {
+	if (strcmp(args,"r")==0)	isa_reg_display();
+	if (args==NULL) printf("Please add register\n");
+	return 0;
+}
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;

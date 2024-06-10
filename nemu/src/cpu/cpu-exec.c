@@ -79,7 +79,8 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
-  }
+
+	}
 }
 
 static void statistic() {
@@ -106,6 +107,7 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
 
 
+
 	}
 
   uint64_t timer_start = get_time();
@@ -126,5 +128,6 @@ void cpu_exec(uint64_t n) {
           nemu_state.halt_pc);
       // fall through
     case NEMU_QUIT: statistic();
-  }
+
+	}
 }

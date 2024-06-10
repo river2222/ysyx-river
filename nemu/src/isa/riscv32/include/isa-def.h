@@ -28,6 +28,7 @@ typedef struct {
   union {
     uint32_t val;
 
+
 	} inst;
 } MUXDEF(CONFIG_RV64, riscv64_ISADecodeInfo, riscv32_ISADecodeInfo);
 
