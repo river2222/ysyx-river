@@ -124,11 +124,12 @@ static int cmd_info(char *args) {
 
 static int cmd_x(char *args) {
 	int n;
-	unsigned int addr;
+	uint32_t addr;
 	sscanf(args,"%d%x",&n,&addr);
 	for (int i = 0; i < n; i ++){
 		printf("%x\n",paddr_read(addr,4));
 		addr = addr + 4;
+
 	}
 	return 0;
 }
