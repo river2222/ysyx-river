@@ -59,6 +59,8 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
+static int cmd_x(char *args);
+word_t paddr_read(paddr_t addr, int len);
 
 static struct {
   const char *name;
@@ -72,6 +74,7 @@ static struct {
   /* TODO: Add more commands */
 	{ "si", "Single step", cmd_si },
 	{ "info", "Print registers", cmd_info },
+	{ "x", "Print memory", cmd_x },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -116,6 +119,17 @@ static int cmd_si(char *args) {
 static int cmd_info(char *args) {
 	if (strcmp(args,"r")==0)	isa_reg_display();
 	if (args==NULL) printf("Please add register\n");
+	return 0;
+}
+
+static int cmd_x(char *args) {
+	int n;
+	unsigned int addr;
+	sscanf(args,"%d%x",&n,&addr);
+	for (int i = 0; i < n; i ++){
+		printf("%x\n",paddr_read(addr,4));
+		addr = addr + 4;
+	}
 	return 0;
 }
 
