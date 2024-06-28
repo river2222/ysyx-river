@@ -278,7 +278,7 @@ int32_t eval(word_t p, word_t q) {
 
 
 word_t expr(char *e, bool *success) {
-
+	printf("nr_token=%d\n",nr_token);
 	if (!make_token(e)) {
     *success = false;
     return 0;
@@ -287,6 +287,6 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   
-
+	
   return eval(0,nr_token-1);
 }
