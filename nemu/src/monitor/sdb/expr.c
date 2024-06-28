@@ -99,9 +99,10 @@ static bool make_token(char *e) {
 	while (e[position] != '\0') {
     /* Try all rules one by one. */
 
+	
 		for (i = 0; i < NR_REGEX; i ++) {
-  
 
+	
 			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
@@ -110,17 +111,18 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
-				Token token;
 				switch (rules[i].token_type) {
           case TK_NOTYPE:
 						break;
 					default:
-						strncpy(token.str, substr_start, substr_len);
-						token.str[substr_len] = '\0';
-						token.type=rules[i].token_type;
-						tokens[nr_token++] = token;
+						tokens[nr_token].type = rules[i].token_type;
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
+						tokens[nr_token].str[substr_len] = '\0';
+						nr_token++;
+						printf("nr_token:%d",nr_token);
 						break;
 
+	
 				}
         break;
 
