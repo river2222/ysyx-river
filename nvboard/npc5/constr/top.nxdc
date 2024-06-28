@@ -1,0 +1,11 @@
+top=top
+
+B (SW3, SW2, SW1, SW0)
+A (SW7, SW6, SW5, SW4)
+func_sel (SW15, SW14, SW13)
+out_s (LD2, LD1, LD0) 
+out_eq LD15
+out_lt LD14
+overflow LD13
+carry LD12
+
