@@ -285,7 +285,7 @@ int32_t eval(word_t p, word_t q) {
 }
 
 
-word_t expr(char *e, bool *success) {
+int32_t expr(char *e, bool *success) {
 	if (!make_token(e)) {
     *success = false;
     return 0;
