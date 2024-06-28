@@ -28,16 +28,22 @@ void init_wp_pool();
 static char* rl_gets() {
   static char *line_read = NULL;
 
-  if (line_read) {
+
+
+	if (line_read) {
     free(line_read);
     line_read = NULL;
-  }
+
+	}
 
   line_read = readline("(nemu) ");
 
-  if (line_read && *line_read) {
+
+
+	if (line_read && *line_read) {
     add_history(line_read);
-  }
+
+	}
 
   return line_read;
 }
@@ -49,10 +55,16 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+	nemu_state.state = NEMU_QUIT;
   return -1;
 }
 
 static int cmd_help(char *args);
+static int cmd_si(char *args);
+static int cmd_info(char *args);
+static int cmd_x(char *args);
+static int cmd_p(char *args);
+word_t paddr_read(paddr_t addr, int len);
 
 static struct {
   const char *name;
@@ -64,7 +76,10 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+	{ "si", "Single step", cmd_si },
+	{ "info", "Print registers", cmd_info },
+	{ "x", "Print memory", cmd_x },
+	{ "p", "Expression Eval", cmd_p },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -74,13 +89,17 @@ static int cmd_help(char *args) {
   char *arg = strtok(NULL, " ");
   int i;
 
-  if (arg == NULL) {
+
+	if (arg == NULL) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
       printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
-    }
-  }
-  else {
+
+		}
+
+	}
+
+	else {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
         printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
@@ -92,6 +111,46 @@ static int cmd_help(char *args) {
   return 0;
 }
 
+static int cmd_si(char *args) {
+	if (args==NULL)	cpu_exec(1);	
+	else{
+		int n=0;
+		sscanf(args,"%d",&n);
+		cpu_exec(n);
+	}
+	return 0;
+}	
+
+static int cmd_info(char *args) {
+	if (strcmp(args,"r")==0)	isa_reg_display();
+	if (args==NULL) printf("Please add register\n");
+	return 0;
+}
+
+static int cmd_x(char *args) {
+	int n;
+	unsigned int addr;
+	sscanf(args,"%d%x",&n,&addr);
+	for (int i = 0; i < n; i ++){
+		printf("%x\n",paddr_read(addr,4));
+		addr = addr + 4;
+
+	
+	}
+	return 0;
+}
+
+static int cmd_p(char *args) {
+	bool success = true;
+	printf("Args: %s\n", args);
+	int32_t value = expr(args, &success);
+	if (success)
+		printf("%d\n",value);
+	else
+		printf("Can't Make Token");
+	return 0;
+}
+
 void sdb_set_batch_mode() {
   is_batch_mode = true;
 }
@@ -100,9 +159,11 @@ void sdb_mainloop() {
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
-  }
 
-  for (char *str; (str = rl_gets()) != NULL; ) {
+	}
+
+
+	for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
@@ -111,9 +172,11 @@ void sdb_mainloop() {
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
-     */
+
+*/
     char *args = cmd + strlen(cmd) + 1;
-    if (args >= str_end) {
+
+		if (args >= str_end) {
       args = NULL;
     }
 
@@ -127,8 +190,10 @@ void sdb_mainloop() {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
         if (cmd_table[i].handler(args) < 0) { return; }
         break;
-      }
-    }
+
+			}
+
+		}
 
     if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
   }
