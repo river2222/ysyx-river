@@ -217,6 +217,7 @@ int32_t eval(int p, int q) {
 		}
 
 		
+	
 		else {
         word_t op=0;
 				word_t position=0;
@@ -230,17 +231,20 @@ int32_t eval(int p, int q) {
 					if (tokens[i].type == '(') {
 						++balance;
 						continue;
+	
 					}
 					else if (tokens[i].type == ')') {
 						--balance;
+	
 						if (balance < 0){
 							printf("parentheses error\n");
 							assert(0);
 				
 						}
 						continue;
-				
 					}
+					else if (tokens[i].type ==TK_NUM)
+						continue;
 					if (balance != 0)
 						continue;
 				
@@ -253,19 +257,18 @@ int32_t eval(int p, int q) {
 						case TK_NEQ: t = 3; break;
 						case TK_AND: t = 4; break;
 						case TK_OR: t = 4; break;
+	
 					}
 					if (t >= max) {
 						max = t;
 						position = i;
-				
-				
 					}
 				
+	
 				}
 				if (balance != 0){
 					printf("parentheses error\n");
 					assert(0);
-				
 				}
 
 				op = position;
@@ -283,6 +286,7 @@ int32_t eval(int p, int q) {
 						case TK_OR: return val1 || val2;
             default: assert(0);
         }
+
     }
 
     return 0;
@@ -301,5 +305,5 @@ int32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   
 	
-  return eval(1,nr_token);
+  return eval(0,nr_token-1);
 }
