@@ -96,14 +96,17 @@ static bool make_token(char *e) {
   nr_token = 0;
 
 
-	while (e[position] != '\0') {
+	while 
+		(e[position] != '\0') {
     /* Try all rules one by one. */
 
 	
-		for (i = 0; i < NR_REGEX; i ++) {
+		
+			for (i = 0; i < NR_REGEX; i ++) {
 
 	
-			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+			
+				if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
@@ -111,6 +114,7 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
+				
 				switch (rules[i].token_type) {
           case TK_NOTYPE:
 						break;
@@ -174,40 +178,41 @@ bool check_parentheses(word_t p, word_t q) {
 
 int32_t eval(word_t p, word_t q) {
     if (p > q) {
-        printf("Bad Expression p=%d q=%d\n",p,q);
+        printf("p>q Bad Expression p=%d q=%d\n",p,q);
         assert(0);
     }
 
-
-
 		else if (p == q) { 
-				if (tokens[p].type == TK_NUM) {
+			printf("p=q: p=%d q=%d\n",p,q);	
+			if (tokens[p].type == TK_NUM) {
             int32_t num;
             sscanf(tokens[p].str, "%d", &num);
             return num;
     
+		
 				} 
+		
 				else if (tokens[p].type == TK_HEX) {
             word_t hex;
 						sscanf(tokens[p].str, "%x", &hex);
 						return hex;
         } 
+		
 				else {
             printf("Wrong Single Input\n");
             return 0;
         }
 		
 
+		
 		} 
 
 		else if (check_parentheses(p, q) == true) {
         return eval(p + 1, q - 1);
     
-
-
 		}
 
-
+		
 		else {
         word_t op=0;
 				word_t position=0;
@@ -215,6 +220,7 @@ int32_t eval(word_t p, word_t q) {
 				word_t max = 0;
 				word_t t=0;
 				
+		
 				for (word_t i = p; i <= q; i++) {
 				
 					if (tokens[i].type == '(') {
@@ -286,7 +292,7 @@ word_t expr(char *e, bool *success) {
 
 	
 	}
-	printf("aftermaketoken nr_token=%d",nr_token);
+	printf("aftermaketoken nr_token=%d\n",nr_token);
 
   /* TODO: Insert codes to evaluate the expression. */
   
