@@ -177,6 +177,7 @@ int32_t eval(word_t p, word_t q) {
     }
 
 
+
 		else if (p == q) { 
 				if (tokens[p].type == TK_NUM) {
             int32_t num;
