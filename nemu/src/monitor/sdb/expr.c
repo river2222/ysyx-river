@@ -172,9 +172,10 @@ bool check_parentheses(word_t p, word_t q) {
 
 int32_t eval(word_t p, word_t q) {
     if (p > q) {
-        printf("Bad Expression\n");
+        printf("Bad Expression p=%d q=%d\n",p,q);
         assert(0);
     }
+
 
 		else if (p == q) { 
 				if (tokens[p].type == TK_NUM) {
@@ -280,6 +281,7 @@ word_t expr(char *e, bool *success) {
 	if (!make_token(e)) {
     *success = false;
     return 0;
+
 	}
 
   /* TODO: Insert codes to evaluate the expression. */
