@@ -182,8 +182,10 @@ int32_t eval(int p, int q) {
         assert(0);
     }
 
+
 		else if (p == q) { 
 			printf("p=q: p=%d q=%d\n",p,q);	
+
 
 			if (tokens[p].type == TK_NUM) {
             int32_t num;
@@ -193,7 +195,8 @@ int32_t eval(int p, int q) {
 		
 				} 
 		
-				else if (tokens[p].type == TK_HEX) {
+
+			else if (tokens[p].type == TK_HEX) {
             word_t hex;
 						sscanf(tokens[p].str, "%x", &hex);
 						return hex;
@@ -266,7 +269,7 @@ int32_t eval(int p, int q) {
 				}
 
 				op = position;
-
+				printf("op=%d\n",op);
 				int32_t val1 = eval(p, op - 1);
         int32_t val2 = eval(op + 1, q); 
         switch (tokens[op].type) {
