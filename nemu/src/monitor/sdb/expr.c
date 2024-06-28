@@ -119,15 +119,21 @@ static bool make_token(char *e) {
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						tokens[nr_token].str[substr_len] = '\0';
 						nr_token++;
-						printf("nr_token:%d",nr_token);
 						break;
 
 	
+
+	
+
 				}
         break;
 
+	
+
 			}	
 
+	
+	
 		}
 		if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
@@ -136,6 +142,7 @@ static bool make_token(char *e) {
 		}
 
 	}
+
   return true;
 }
 
@@ -273,13 +280,13 @@ int32_t eval(word_t p, word_t q) {
 
 
 word_t expr(char *e, bool *success) {
-	printf("nr_token=%d\n",nr_token);
 	if (!make_token(e)) {
     *success = false;
     return 0;
 
 	
 	}
+	printf("aftermaketoken nr_token=%d",nr_token);
 
   /* TODO: Insert codes to evaluate the expression. */
   
