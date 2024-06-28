@@ -28,13 +28,16 @@ void init_wp_pool();
 static char* rl_gets() {
   static char *line_read = NULL;
 
-  if (line_read) {
+
+
+	if (line_read) {
     free(line_read);
     line_read = NULL;
 
 	}
 
   line_read = readline("(nemu) ");
+
 
 
 	if (line_read && *line_read) {
@@ -60,6 +63,7 @@ static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
+static int cmd_p(char *args);
 word_t paddr_read(paddr_t addr, int len);
 
 static struct {
@@ -75,6 +79,7 @@ static struct {
 	{ "si", "Single step", cmd_si },
 	{ "info", "Print registers", cmd_info },
 	{ "x", "Print memory", cmd_x },
+	{ "p", "Expression Eval", cmd_p },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -107,7 +112,7 @@ static int cmd_help(char *args) {
 }
 
 static int cmd_si(char *args) {
-	if (args==NULL)	cpu_exec(1);
+	if (args==NULL)	cpu_exec(1);	
 	else{
 		int n=0;
 		sscanf(args,"%d",&n);
@@ -129,7 +134,18 @@ static int cmd_x(char *args) {
 	for (int i = 0; i < n; i ++){
 		printf("%x\n",paddr_read(addr,4));
 		addr = addr + 4;
+
 	}
+	return 0;
+}
+
+static int cmd_p(char *args) {
+	bool success = true;
+	int32_t value = expr(args, &success);
+	if (success)
+		printf("%d\n",value);
+	else
+		printf("Can't Make Token");
 	return 0;
 }
 
