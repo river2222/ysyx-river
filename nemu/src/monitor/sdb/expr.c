@@ -176,7 +176,7 @@ bool check_parentheses(word_t p, word_t q) {
 }
 
 
-int32_t eval(word_t p, word_t q) {
+int32_t eval(int p, int q) {
     if (p > q) {
         printf("p>q Bad Expression p=%d q=%d\n",p,q);
         assert(0);
@@ -184,6 +184,7 @@ int32_t eval(word_t p, word_t q) {
 
 		else if (p == q) { 
 			printf("p=q: p=%d q=%d\n",p,q);	
+
 			if (tokens[p].type == TK_NUM) {
             int32_t num;
             sscanf(tokens[p].str, "%d", &num);
