@@ -135,6 +135,7 @@ static int cmd_x(char *args) {
 		printf("%x\n",paddr_read(addr,4));
 		addr = addr + 4;
 
+	
 	}
 	return 0;
 }
