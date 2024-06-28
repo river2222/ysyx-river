@@ -183,8 +183,9 @@ int32_t eval(int p, int q) {
     }
 
 
+
 		else if (p == q) { 
-			printf("p=q: p=%d q=%d\n",p,q);	
+			
 
 
 			if (tokens[p].type == TK_NUM) {
@@ -218,6 +219,7 @@ int32_t eval(int p, int q) {
 
 		
 	
+
 		else {
         word_t op=0;
 				word_t position=0;
@@ -232,7 +234,9 @@ int32_t eval(int p, int q) {
 						++balance;
 						continue;
 	
+
 					}
+
 					else if (tokens[i].type == ')') {
 						--balance;
 	
@@ -258,13 +262,16 @@ int32_t eval(int p, int q) {
 						case TK_AND: t = 4; break;
 						case TK_OR: t = 4; break;
 	
+
 					}
+
 					if (t >= max) {
 						max = t;
 						position = i;
 					}
 				
 	
+
 				}
 				if (balance != 0){
 					printf("parentheses error\n");
@@ -272,7 +279,6 @@ int32_t eval(int p, int q) {
 				}
 
 				op = position;
-				printf("op=%d\n",op);
 				int32_t val1 = eval(p, op - 1);
         int32_t val2 = eval(op + 1, q); 
         switch (tokens[op].type) {
@@ -299,8 +305,8 @@ int32_t expr(char *e, bool *success) {
     return 0;
 
 	
+
 	}
-	printf("aftermaketoken nr_token=%d\n",nr_token);
 
   /* TODO: Insert codes to evaluate the expression. */
   
